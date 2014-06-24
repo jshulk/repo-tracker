@@ -93,4 +93,12 @@ describe('Vision Project API', function() {
       });
 
     });
+
+    describe("When deleting an existing resource /project/:id", function(){
+      it("should respond with 204", function(done){
+        request(app)
+        .del("/project/"+id)
+        .expect(204, done);
+      });
+    });
 });
