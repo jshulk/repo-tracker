@@ -27,7 +27,8 @@
     "agenda": "~0.6.16",
     "nconf": "~0.6.9",
     "winston": "~0.7.3",
-    "string": "~1.9.0"
+    "string": "~1.9.0",
+    "underscore": "~1.6.0"
   },
   "devDependencies": {
     "mocha": "~1.20.1",

@@ -2,6 +2,7 @@ var app = require('../app'),
     request = require('supertest'),
     assert = require('assert'),
     mongoose = require('mongoose'),
+    _ = require("underscore"),
     login = require('./login');
 
 describe('Vision Project API', function() {
@@ -9,7 +10,7 @@ describe('Vision Project API', function() {
 
     beforeEach(function(done) {
 
-        
+
         mongoose.connection.collections['projects'].drop(function(err) {
 
             var proj = {
@@ -46,5 +47,30 @@ describe('Vision Project API', function() {
                 done();
             });
         });
+    });
+
+    describe("when requesting an available resource /project/:id", function(){
+      
+      it("should respond with 200", function(done){
+        request(app)
+        .get("/project/"+id)
+        .expect("Content-Type", /json/)
+        .expect(200)
+        .end(function(err, res){
+
+          var proj = JSON.parse(res.text);
+
+          assert.equal(proj._id, id);
+          assert(_.has(proj, '_id'));
+          assert(_.has(proj, 'name'));
+          assert(_.has(proj, 'user'));
+          assert(_.has(proj, 'token'));
+          assert(_.has(proj, 'created'));
+          assert(_.has(proj, 'repositories'));
+
+          done();
+        });
+      });
+
     });
 });
