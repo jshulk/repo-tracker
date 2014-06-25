@@ -17,7 +17,7 @@ describe('Vision Project API', function() {
                 name: "test name",
                 user: login.user,
                 token: login.token,
-                repositories: ["node-plates"]
+                repositories: ["jangular"]
             };
 
             mongoose.connection.collections['projects'].insert(proj, function(err, docs) {
@@ -121,4 +121,30 @@ describe('Vision Project API', function() {
             });
         }); 
     });
+    
+    describe("When requesting an available resource at /project/:id/issues ", function(){
+    
+        it("should respond with 200", function(done){
+           this.timeout(5000);
+            request(app)
+            .get("/project/"+id+"/issues")
+            .expect("Content-Type", /json/)
+            .expect(200)
+            .end(function(err, res){
+               	var issue = _.first(JSON.parse(res.text));
+                
+                assert(_.has(issue, 'title'));
+                assert(_.has(issue, 'state'));
+                assert(_.has(issue, 'updated_at'));
+                assert(_.has(issue, 'login'));
+                assert(_.has(issue, 'avatar_url'));
+                assert(_.has(issue, 'ago'));
+                assert(_.has(issue, 'repository'));
+                done();
+                
+            });
+        });
+    });
+    
+    
 });

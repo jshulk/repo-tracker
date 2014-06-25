@@ -16,7 +16,7 @@ describe("vision github api", function(){
               user : login.user,
               token : login.token,
               deleted: false,
-              repositories : ["node-plates"]
+              repositories : ["repo-tracker"]
           };
            
            mongoose.connection.collections['projects'].insert(proj, function(err, docs){
@@ -42,5 +42,27 @@ describe("vision github api", function(){
                done();
            });
         }); 
+    });
+    
+    describe("When requesting an available resource /project/:id/commits", function(){
+        it("should respond with 200", function(done){
+            //since we are making a network call for fetching the commits.
+            this.timeout(5000);
+            request(app)
+            .get("/project/"+id+"/commits")
+            .expect("Content-Type", /json/)
+            .expect(200)
+            .end(function(err, res){
+              
+               var commit = _.first(JSON.parse(res.text));
+                assert(_.has(commit, "message"));
+                assert(_.has(commit, "date"));
+                assert(_.has(commit, "login"));
+                assert(_.has(commit, "avatar_url"));
+                assert(_.has(commit, "ago"));
+                assert(_.has(commit, "repository"));
+                done();
+            });
+        });
     });
 });
