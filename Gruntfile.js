@@ -2,6 +2,8 @@ module.exports =function(grunt){
     
     grunt.loadNpmTasks('grunt-cafe-mocha');
     grunt.loadNpmTasks('grunt-env');
+    grunt.loadNpmTasks('grunt-contrib-handlebars');
+    
     
     grunt.initConfig({
         env: {
@@ -13,6 +15,16 @@ module.exports =function(grunt){
                 options: {
                     ui: 'bdd',
                     reporter: 'spec'
+                }
+            }
+        },
+        handlebars: {
+            compile: {
+                options: {
+                    namespace: "visiontemplates"
+                },
+                files: {
+                    "public/components/vision/templates.js": ["templates/*.hbs"]
                 }
             }
         }
