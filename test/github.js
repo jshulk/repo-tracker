@@ -30,6 +30,7 @@ describe("vision github api", function(){
     
     describe("when requesting a resource /project/:id/repos ", function(){
        	it("should respond with 200", function(done){
+          this.timeout(5000);
            request(app)
            .get("/project/"+id+"/repos")
            .expect(200)

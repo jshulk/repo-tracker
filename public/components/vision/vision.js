@@ -138,7 +138,8 @@ Vision.CommitView = Backbone.View.extend({
     className : "media",
     viewTemplate: visiontemplates["templates/commits.hbs"],
     render: function(){
-        this.$el.html( this.viewTemplate( this.model.toJSON() ));
+        var markup = this.viewTemplate( this.model.toJSON() );
+        this.$el.html( markup );
         return this;
     }
 });
@@ -162,11 +163,13 @@ Vision.CommitListView = Backbone.View.extend({
             
     },
     render: function(){
-        this.collection.each( this.addOne, this);
+             this.collection.each( this.addOne, this);
     },
     addOne: function(item){
         var commitView = new Vision.CommitView({ model: item});
-        this.$el.append( commitView.render().el);
+        var markup = commitView.render().el;
+     
+        this.$el.append( markup );
     },
     create: function(args){
         this.collection = new Vision.CommitList(this.Commits, {
@@ -195,6 +198,7 @@ Vision.RepositoryListView = Backbone.View.extend({
         this.collection = new Vision.RepositoryList(this.Repositories, {
          projectId : args.projectId 
         });
+
         var self = this;
         this.$el.html("");
         
@@ -210,13 +214,14 @@ Vision.RepositoryListView = Backbone.View.extend({
         
       	this.collection.each( this.addOne, this ); 
         
+        
         ( this.options.editMode ) ? this.enableForm() : this.disableForm();
         
         return this;
         
     },
     addOne: function( repository ){
-        var repositoryView = new RepositoryView({
+        var repositoryView = new Vision.RepositoryView({
             model: repository
         });
         
@@ -224,6 +229,7 @@ Vision.RepositoryListView = Backbone.View.extend({
         
     },
     enableForm: function(){
+        console.log('enable form called');
         this.$("input:checkbox").remove('disabled');
     },
     disableForm: function(){
@@ -257,7 +263,7 @@ Vision.ProjectView = Backbone.View.extend({
     delete: function(){
     	this.model.destroy();
     	this.remove();
-    	this.repository({ editMode: false});
+    	//this.repository({ editMode: false});
 	},
     edit: function(){
       var model = this.model.toJSON();
@@ -265,8 +271,10 @@ Vision.ProjectView = Backbone.View.extend({
         this.repository({ editMode: true});
     },
     add: function(){
-      this.$el.html( this.formTemplate( this.model.toJSON() ));
-       this.repository();
+
+    var markup = this.formTemplate( this.model.toJSON() );
+      this.$el.html( markup );
+       this.repository({editMode: false});
     },
     cancel: function(){
       	var projectId = this.model.toJSON()._id;
@@ -274,7 +282,7 @@ Vision.ProjectView = Backbone.View.extend({
             this.remove();
         } else {
             this.render();
-            this.repository();
+            this.repository({editMode: false});
         }
         
         Backbone.history.navigate('index', true);
@@ -356,7 +364,7 @@ Vision.ProjectListView = Backbone.View.extend({
         this.add( new Vision.Project() ).add();
     },
     remove: function(removedModel){
-        var removed = removeModel.attributes;
+        var removed = removedModel.attributes;
         _.each( this.Projects, function(project){
            if(_.isEqual(project, removed)){
                this.Projects.splice(_.indexOf(projects, project), 1)
@@ -406,7 +414,8 @@ Vision.Router = Backbone.Router.extend({
         
         this.repositoryListView = new Vision.RepositoryListView({
             el: "ul#repository-list",
-            projectId: args.projectId
+            projectId: args.projectId,
+            editMode: args.editMode
         });
         
     },

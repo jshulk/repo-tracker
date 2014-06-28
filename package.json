@@ -32,7 +32,8 @@
     "github": "~0.2.0",
     "moment": "~2.7.0",
     "consolidate": "~0.10.0",
-    "handlebars": "~2.0.0-alpha.4"
+    "handlebars": "~2.0.0-alpha.4",
+    "require-directory": "~1.2.0"
   },
   "devDependencies": {
     "mocha": "~1.20.1",
