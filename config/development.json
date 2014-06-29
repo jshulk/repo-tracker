@@ -8,5 +8,16 @@
     },
     "mongo": {
         "url": "mongodb://localhost/repo_tracker"
-    }
+    },
+    "redis":{
+        "port": 6379,
+        "host": "localhost"
+    },
+    "sockets": {
+        "loglevel": 3,
+        "pollingduration": 10,
+        "browserclientminification" : false,
+        "browserclientetag" : false,
+        "browserclientgzip" : false
+  }
 }

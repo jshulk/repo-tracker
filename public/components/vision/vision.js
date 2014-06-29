@@ -377,60 +377,64 @@ Vision.ProjectListView = Backbone.View.extend({
 
 
 Vision.Router = Backbone.Router.extend({
-    projectListView : "",
-    CommitListView: "",
-    issueListView: "",
-    routes: {
-        "": "index",
-        "add": "add"
-    },
-    add: function(){
-      this.projectListView.showForm();  
-    },
-    initialize: function(){
-      	this.project();  
-        this.listenTo( this.projectListView, "join", this.join );
-    },
-    join: function(args){
-        this.repository(args);
-        this.commits(args);
-        this.issues(args);
-    },
-    issues: function(args){
-      this.issueListView = new Vision.IssueListView({
-          el: "ul#issues-list",
-          projectId: args.projectId,
-          issues: args.issues
-      });  
-    },
-    commits: function(args){
-      	this.commitListView = new Vision.CommitListView({
-            el: "ul#commits-list",
-            projectId: args.projectId,
-            commits: args.commits
-        }); 
-    },
-    repository: function(args){
-        
-        this.repositoryListView = new Vision.RepositoryListView({
-            el: "ul#repository-list",
-            projectId: args.projectId,
-            editMode: args.editMode
-        });
-        
-    },
-    project: function(){
-      	this.projectListView =  new Vision.ProjectListView(); 
-    },
-    index: function(){
-        this.projectListView.render();
-    }
-});
+  projectListView : '',
+  repositoryListView:'',
+  issueListView:'',
+  commitListView:'',
+  socket: null,
 
+  routes: {
+    '' : 'index',
+    'add' : 'add'
+  },  
+
+  initialize : function(socket){
+    this.socket = socket;
+    this.project();
+    this.listenTo(this.projectListView , 'join', this.join);
+    this.socket.on('issues', this.issues);
+    this.socket.on('commits', this.commits);
+  },
+
+  join : function(args){
+    console.log('join called');
+    this.repository(args);
+    this.issues(args);
+    this.commits(args);
+    this.socket.emit('unsubscribe', { channel : args.projectId });
+    this.socket.emit('subscribe', { channel : args.projectId } );
+  },
+
+  project : function(){
+    this.projectListView = new Vision.ProjectListView();
+  },
+
+  repository : function(args){
+    this.repositoryListView = new Vision.RepositoryListView({ el: 'ul#repository-list', projectId: args.projectId, editMode: args.editMode });
+  },
+
+  issues : function(args){
+    console.log('this.issues called');
+    this.issueListView = new Vision.IssueListView({ el: 'ul#issues-list', projectId: args.projectId, issues : args.issues});
+  },
+
+  commits : function(args){
+    this.commitListView = new Vision.CommitListView({ el: 'ul#commits-list', projectId: args.projectId, commits : args.commits});
+  },
+
+  index : function(){
+    this.projectListView.render();
+  },
+
+  add : function(){
+    this.projectListView.showForm();
+  }
+});
 
 Vision.Application = function(){
     this.start = function(){
-  		var router = new Vision.Router();
+        var socketio = io('/');
+  		var router = new Vision.Router(socketio);
         Backbone.history.start();
         router.navigate('index', true);
     }

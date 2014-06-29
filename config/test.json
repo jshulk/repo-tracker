@@ -8,5 +8,10 @@
     },
     "mongo": {
         "url": "mongodb://localhost/repo_tracker"
+    },
+    "redis":{
+        "port": 6379,
+        "host": "localhost"
     }
+
 }
