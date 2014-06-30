@@ -12,6 +12,25 @@
     "redis":{
         "port": 6379,
         "host": "localhost"
+    },
+     "sockets": {
+        "loglevel": 3,
+        "pollingduration": 10,
+        "browserclientminification" : false,
+        "browserclientetag" : false,
+        "browserclientgzip" : false
+  },
+    "auth": {
+        "homepage": "http://127.0.0.1:3000",
+        "callback": "http://127.0.0.1:3000/auth/github/callback",
+        "clientId": "766030e76b435492c298",
+        "clientSecret": "363d5fd3ea11bb8d7d2101d8ae159d0be9d6bb5d"
+    },
+    "session": {
+        "secret": "th1$1$a$ecret",
+        "maxAge": null,
+        "secure": true,
+        "httpOnly": true
     }
 
 }

@@ -3,6 +3,7 @@ module.exports =function(grunt){
     grunt.loadNpmTasks('grunt-cafe-mocha');
     grunt.loadNpmTasks('grunt-env');
     grunt.loadNpmTasks('grunt-contrib-handlebars');
+    grunt.loadNpmTasks('grunt-cucumber');
     
     
     grunt.initConfig({
@@ -26,6 +27,13 @@ module.exports =function(grunt){
                 files: {
                     "public/components/vision/templates.js": ["templates/*.hbs"]
                 }
+            }
+        },
+        cucumberjs: {
+            files: 'features',
+            options: {
+                steps: "features/step_definitions", 
+                format: "pretty"
             }
         }
     });
