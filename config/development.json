@@ -29,7 +29,7 @@
     "session": {
         "secret": "th1$1$a$ecret",
         "maxAge": null,
-        "secure": true,
+        "secure": false, //true only works with https
         "httpOnly": true
     }
 }
