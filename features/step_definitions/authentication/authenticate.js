@@ -4,8 +4,8 @@ var Browser = require('zombie')
 , config = require('../../../lib/configuration');
 
 var steps = function() {
-  var silent = true;
-  var debug = false;
+  var silent = false;
+  var debug = true;
   var Given = When = Then = this.defineStep;
   var browser = null;
   var me = this;
