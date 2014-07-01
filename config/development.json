@@ -7,7 +7,7 @@
         "level": "silly"
     },
     "mongo": {
-        "url": "mongodb://vjunloc:shallowbay@ds031618.mongolab.com:31618/repo_tracker"
+        "url":"mongodb://localhost/repo_tracker"
        
     },
     "redis":{
@@ -23,7 +23,7 @@
   },
     "auth": {
         "homepage": "http://127.0.0.1:3000",
-        "callback": "http://guttus-pryler.codio.io:3000/auth/github/callback",
+        "callback": "http://127.0.0.1:3000/auth/github/callback",
         "clientId": "766030e76b435492c298",
         "clientSecret": "363d5fd3ea11bb8d7d2101d8ae159d0be9d6bb5d"
     },
