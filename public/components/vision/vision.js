@@ -464,7 +464,7 @@ Vision.Router = Backbone.Router.extend({
 
 Vision.Application = function(){        
   this.start = function(){
-    var socketio = io.connect('/');
+      var socketio = io.connect('/', {secure:true, port: '8443'});
     var router = new Vision.Router(socketio);
     Backbone.history.start();
     router.navigate('index', true);
