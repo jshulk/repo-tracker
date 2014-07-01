@@ -1,6 +1,6 @@
 {
     "express": {
-        "port": 3000
+        "port": 8443
     }, 
     "logger": {
         "filename": "logs/run.log",
@@ -22,15 +22,15 @@
         "browserclientgzip" : false
   },
     "auth": {
-        "homepage": "http://127.0.0.1:3000",
-        "callback": "http://127.0.0.1:3000/auth/github/callback",
+        "homepage": "https://127.0.0.1:8443",
+        "callback": "https://127.0.0.1:8443/auth/github/callback",
         "clientId": "766030e76b435492c298",
         "clientSecret": "363d5fd3ea11bb8d7d2101d8ae159d0be9d6bb5d"
     },
     "session": {
         "secret": "th1$1$a$ecret",
         "maxAge": null,
-        "secure": false, 
+        "secure": true, 
         "httpOnly": true
     }
 }
