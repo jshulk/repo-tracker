@@ -36,7 +36,11 @@
     "redis": "~0.10.3",
     "socket.io": "~1.0.6",
     "node-schedule": "~0.1.8",
-    "passport-github": "~0.1.5"
+    "passport-github": "~0.1.5",
+    "session.socket.io": "~0.1.6",
+    "csurf": "~1.2.2",
+    "helmet": "~0.3.2",
+    "connect-redis": "~2.0.0"
   },
   "devDependencies": {
     "mocha": "~1.20.1",

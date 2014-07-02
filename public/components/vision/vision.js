@@ -2,6 +2,17 @@ var Vision = Vision || {};
 
 Backbone.View.prototype.event_aggregator = _.extend({}, Backbone.Events);
 
+Backbone.sync = (function(original){
+    
+    return function(method, model, options){
+      options.beforeSend = function(xhr){
+        var token = $("meta[name='csrf-token']").attr("content");
+          xhr.setRequestHeader('X-CSRF-TOKEN', token );
+      };  
+        original(method, model, options );
+    };
+    
+})(Backbone.sync);
 
 Vision.Issue = Backbone.Model.extend({
   defaults: {
